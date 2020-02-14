@@ -16,7 +16,7 @@ class CreateOtherOptionsTable extends Migration
         Schema::create('other_options', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->integer('addtional_price')->default(0);
+            $table->integer('additional_price')->default(0);
             $table->timestamps();
             $table->softDeletes();	
         });

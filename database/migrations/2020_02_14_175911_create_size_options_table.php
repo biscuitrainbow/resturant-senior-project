@@ -16,7 +16,7 @@ class CreateSizeOptionsTable extends Migration
         Schema::create('size_options', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->integer('addtional_price')->default(0);
+            $table->integer('additional_price')->default(0);
             $table->timestamps();
             $table->softDeletes();	
         });

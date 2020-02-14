@@ -32,6 +32,9 @@ class Category extends Resource
         'id',
     ];
 
+    public static $group = 'อาหาร';
+
+
     /**
      * Get the fields displayed by the resource.
      *

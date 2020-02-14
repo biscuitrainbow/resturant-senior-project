@@ -5,26 +5,25 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Menu extends Resource
+class OtherOption extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Menu';
+    public static $model = 'App\OtherOption';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,6 +33,7 @@ class Menu extends Resource
     public static $search = [
         'id',
     ];
+
 
     public static $group = 'อาหาร';
 
@@ -47,10 +47,9 @@ class Menu extends Resource
     public function fields(Request $request)
     {
         return [
-            Image::make('img')->disk('public'),
-            Text::make('name'),
-            Number::make('price'),
-            BelongsTo::make('Category'),
+            Text::make('ขนาด', 'name')->sortable(),
+            BelongsTo::make('Menu')->sortable(),
+            Number::make('บวกเพิ่ม(บาท)', 'additional_price')->sortable(),
         ];
     }
 
