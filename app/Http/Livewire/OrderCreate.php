@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Category;
 use App\Menu;
 use App\Order;
 use Livewire\Component;
@@ -9,13 +10,21 @@ use Livewire\Component;
 class OrderCreate extends Component
 {
 
-    public $selectedMenus = [];
+    public $selectedMenus;
+    public $selectedCategory;
+
+    public function mount()
+    {
+        $this->selectedMenus = [];
+        $this->selectedCategory = Category::with('menus')->first()->toArray();
+    }
 
     public function render()
     {
-        $menus = Menu::all();
+        $menus = $this->selectedCategory['menus'];
+        $categories = Category::all();
 
-        return view('livewire.order-create', compact('menus'));
+        return view('livewire.order-create', compact('menus', 'categories'));
     }
 
     public function addMenu($id)
@@ -33,6 +42,12 @@ class OrderCreate extends Component
                 'total_price' => $menu->price,
             ];
         }
+    }
+
+    public function changeCategory($id)
+    {
+        $category = Category::with('menus')->find($id);
+        $this->selectedCategory = $category->toArray();
     }
 
     public function increment($id)
