@@ -12,11 +12,13 @@ class OrderCreate extends Component
 
     public $selectedMenus;
     public $selectedCategory;
+    public $menuOptionSelecting;
 
     public function mount()
     {
         $this->selectedMenus = [];
-        $this->selectedCategory = Category::with('menus')->first()->toArray();
+        $this->selectedCategory = Category::with('menus','menus.sizeOptions')->first()->toArray();
+
     }
 
     public function render()
@@ -24,29 +26,49 @@ class OrderCreate extends Component
         $menus = $this->selectedCategory['menus'];
         $categories = Category::all();
 
+
         return view('livewire.order-create', compact('menus', 'categories'));
     }
 
     public function addMenu($id)
     {
-        $menu = Menu::find($id);
 
-        if (array_key_exists($id, $this->selectedMenus)) {
-            $this->increment($id);
-        } else {
-            $this->selectedMenus[$id] = [
-                'id' => $menu->id,
-                'name' => $menu->name,
-                'price' => $menu->price,
-                'quantity' => 1,
-                'total_price' => $menu->price,
-            ];
-        }
+        $menu = Menu::with('sizeOptions','otherOptions')->find($id);
+        $this->menuOptionSelecting = $menu->toArray();
+
+
+
+        // if (array_key_exists($id, $this->selectedMenus)) {
+        //     $this->increment($id);
+        // } else {
+        //     $this->selectedMenus[$id] = [
+        //         'id' => $menu->id,
+        //         'name' => $menu->name,
+        //         'price' => $menu->price,
+        //         'quantity' => 1,
+        //         'total_price' => $menu->price,
+        //     ];
+        // }
     }
+
+    public function submitMenu(){
+        
+    }
+
+    public function dismissMenuOption()
+    {
+        $this->menuOptionSelecting = null;
+    }
+
+    // public function changeCategory($id)
+    // {
+    //     $category = Category::with('menus')->find($id);
+    //     $this->selectedCategory = $category->toArray();
+    // }
 
     public function changeCategory($id)
     {
-        $category = Category::with('menus')->find($id);
+        $category = Category::with('menus','menus.sizeOptions')->find($id);
         $this->selectedCategory = $category->toArray();
     }
 

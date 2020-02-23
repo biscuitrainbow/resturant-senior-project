@@ -15,12 +15,16 @@ class CreateOrderItemsTable extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->bigIncrements('id');
+                
             $table->unsignedBigInteger('menu_id');
             $table->foreign('menu_id')->references('id')->on('menus');
+
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
+
             $table->unsignedBigInteger('size_option_id');
             $table->foreign('size_option_id')->references('id')->on('size_options');
+
             $table->integer('quantity');
             $table->integer('total_price');
             $table->text('note')->nullable();

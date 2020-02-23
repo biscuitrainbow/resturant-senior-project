@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price');
             $table->unsignedBigInteger('pick_up_id')->nullable();
             $table->foreign('pick_up_id')->references('id')->on('pick_ups');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('type');
             $table->timestamp('completed_at');

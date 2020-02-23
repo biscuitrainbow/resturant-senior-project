@@ -10,4 +10,14 @@ class Menu extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function sizeOptions()
+    {
+        return $this->hasMany(SizeOption::class, 'menu_id');
+    }
+
+    public function otherOptions()
+    {
+        return $this->hasMany(OtherOption::class, 'menu_id');
+    }
 }
